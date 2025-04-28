@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class HelloApplication extends Application implements IMVPContract.View {
 
+    private TextField tf_employeeIDField;
     private TextField tf_firstNameField;
     private TextField tf_lastNameField;
     private TextField tf_salaryField;
@@ -30,6 +31,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
         stage.setTitle("Employee Database");
 
         Label messageLabel = new Label("Enter Employee Details");
+        tf_employeeIDField = new TextField();
+        tf_employeeIDField.setPromptText("Enter employee's ID Number");
         tf_firstNameField = new TextField();
         tf_firstNameField.setPromptText("Enter employee's First Name");
         tf_lastNameField = new TextField();
@@ -40,6 +43,7 @@ public class HelloApplication extends Application implements IMVPContract.View {
         tf_jobField.setPromptText("Enter employee's Job Title");
         tf_yearsField = new TextField();
         tf_yearsField.setPromptText("Enter how many years the employee has been employed");
+
 
         Label label_employeeInDB = new Label("Num of Employee's: ");
         label_numOfEmployee = new Label("0");
@@ -55,7 +59,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
     }
 
     public void buttonClicked(ActionEvent event) {
-
+        myPresenter.addEmployeeToDB( tf_firstNameField.getText(), tf_lastNameField.getText(), tf_salaryField.getText(),
+                tf_jobField.getText(), tf_yearsField.getText(), tf_employeeIDField.getText());
     }
 
     @Override

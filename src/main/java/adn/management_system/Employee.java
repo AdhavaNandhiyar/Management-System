@@ -6,6 +6,7 @@ public class Employee {
     private Integer salary;
     private String jobTitle;
     private Integer yearsAtCompany;
+    private Integer employeeID;
 
     private Employee() {
         this.firstName = "Unknown";
@@ -13,13 +14,15 @@ public class Employee {
         this.salary = 0;
         this.jobTitle = "Unknown";
         this.yearsAtCompany = 0;
+        this.employeeID = 00000;
     }
 
-    Employee(String initFirstName, String initLastName, Integer initSalary, String initJobTitle, Integer initYearsAtCompany) {
+    Employee(String initFirstName, String initLastName, Integer initSalary, String initJobTitle, Integer initYearsAtCompany, Integer initEmployeeID) {
         this.firstName = initFirstName;
         this.lastName = initLastName;
         this.salary = initSalary;
         this.jobTitle = initJobTitle;
         this.yearsAtCompany = initYearsAtCompany;
+        this.employeeID = initEmployeeID;
     }
 }

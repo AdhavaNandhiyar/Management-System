@@ -10,11 +10,12 @@ public class EmployeePresenter implements IMVPContract.Presenter {
     }
 
     @Override
-    public void addEmployeeToDB(String initFirstName, String initLastName, String initSalary, String initJobTitle, String initYearsAtCompany) {
+    public void addEmployeeToDB(String initFirstName, String initLastName, String initSalary, String initJobTitle, String initYearsAtCompany, String initEmployeeID) {
         Integer eYears = Integer.parseInt( initYearsAtCompany );
         Integer eSalary = Integer.parseInt( initSalary );
+        Integer eID = Integer.parseInt( initEmployeeID);
 
-        Employee e = new Employee(initFirstName, initLastName, eSalary, initJobTitle, eYears);
+        Employee e = new Employee(initFirstName, initLastName, eSalary, initJobTitle, eYears, eID);
         employeeDB.addEmployee(e);
 
         theActualView.updateNumberInDB( employeeDB.numInDB() );
