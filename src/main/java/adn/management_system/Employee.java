@@ -3,9 +3,9 @@ package adn.management_system;
 public class Employee {
     private String firstName;
     private String lastName;
-    private int salary;
+    private Integer salary;
     private String jobTitle;
-    private int yearsAtCompany;
+    private Integer yearsAtCompany;
 
     private Employee() {
         this.firstName = "Unknown";
@@ -15,7 +15,7 @@ public class Employee {
         this.yearsAtCompany = 0;
     }
 
-    Employee(String initFirstName, String initLastName, int initSalary, String initJobTitle, int initYearsAtCompany) {
+    Employee(String initFirstName, String initLastName, Integer initSalary, String initJobTitle, Integer initYearsAtCompany) {
         this.firstName = initFirstName;
         this.lastName = initLastName;
         this.salary = initSalary;
