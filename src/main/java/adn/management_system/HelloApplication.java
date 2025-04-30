@@ -113,6 +113,11 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
         label_remove = new Label("");
 
+        Label listLabel = new Label("Show full Employee List: ");
+
+        Button listButton = new Button("Show Employee List");
+        listButton.setOnAction(this::buttonList);
+
         VBox addEmployeePane = new VBox(10);
         addEmployeePane.setPadding(new Insets(20, 30, 20, 30));
         addEmployeePane.getChildren().addAll(messageLabel, tf_employeeIDField, tf_firstNameField, tf_lastNameField, tf_salaryField,
@@ -121,7 +126,7 @@ public class HelloApplication extends Application implements IMVPContract.View {
         VBox findEmployeePane = new VBox(10);
         findEmployeePane.setPadding(new Insets(20, 30, 20, 30));
         findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, removeLabel, tf_removalIDField,
-                removeButton, label_remove);
+                removeButton, label_remove, listLabel, listButton);
 
         HBox hBoxPane = new HBox();
         hBoxPane.getChildren().addAll(addEmployeePane, findEmployeePane, tablePane);
@@ -145,6 +150,10 @@ public class HelloApplication extends Application implements IMVPContract.View {
         myPresenter.removeEmployee(tf_removalIDField.getText());
     }
 
+    public void buttonList(ActionEvent event) {
+       tableView.setItems(employeeObservableList);
+    }
+
     @Override
     public void updateNumberInDB(int num, Employee e) {
         label_numOfEmployee.setText( Integer.toString(num) );
@@ -164,7 +173,7 @@ public class HelloApplication extends Application implements IMVPContract.View {
     }
 
     @Override
-    public void updateRemove() {
+    public void updateRemove(Employee e) {
         label_remove.setText("Employee Removed");
     }
 

@@ -11,6 +11,6 @@ interface IMVPContract {
     interface View {
         void updateNumberInDB( int num , Employee e);
         void updateFound( Employee e );
-        void updateRemove();
+        void updateRemove( Employee e );
     }
 }

@@ -31,7 +31,7 @@ public class EmployeePresenter implements IMVPContract.Presenter {
         Employee e = employeeDB.findEmployee(employeeID);
         employeeDB.removeEmployeeFromDB(e);
 
-        theActualView.updateRemove();
+        theActualView.updateRemove(e);
         theActualView.updateNumberInDB( employeeDB.numInDB(), e);
     }
 }
