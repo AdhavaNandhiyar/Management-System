@@ -1,14 +1,17 @@
 package adn.management_system;
 
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -33,6 +36,30 @@ public class HelloApplication extends Application implements IMVPContract.View {
         myPresenter = new EmployeePresenter(this);
 
         stage.setTitle("Employee Database");
+
+        TableView<Employee> tableView = new TableView<>();
+        ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
+
+        TableColumn<Employee, String> idColumn = new TableColumn<>("ID");
+
+        // Create Age column
+        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("Age");
+
+        // Create City column
+        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("City");
+
+        TableColumn<Employee, Integer> salaryColumn = new TableColumn<>("City");
+
+        TableColumn<Employee, String> jobColumn = new TableColumn<>("Job Title");
+
+        TableColumn<Employee, Integer> yearsColumn = new TableColumn<>("Years in Company");
+
+        // Add columns to the table
+        tableView.getColumns().addAll(idColumn, firstNameColumn, lastNameColumn, salaryColumn, jobColumn, yearsColumn);
+
+        // Create a layout and add the TableView
+        StackPane tablePane = new StackPane();
+        tablePane.getChildren().add(tableView);
 
         Label messageLabel = new Label("Enter Employee Details");
         tf_employeeIDField = new TextField();
@@ -71,10 +98,13 @@ public class HelloApplication extends Application implements IMVPContract.View {
                 tf_jobField, tf_yearsField, addEmployeeButton, label_employeeInDB, label_numOfEmployee,
                 findLabel, tf_findIDField, findButton, label_findResult, label_found);
 
+        HBox hBoxPane = new HBox();
+        hBoxPane.getChildren().addAll(vboxPane, tablePane);
+
         // The Scene (or SceneGraph) in JavaFX contains everything that will
         // be rendered and shown.  Add the pane to it via the constructor call.
         // and then let the stage know about the scene.
-        Scene scene = new Scene(vboxPane);
+        Scene scene = new Scene(hBoxPane);
         stage.setScene(scene);
 
         // this results in the stage being rendered

@@ -2,7 +2,7 @@ package adn.management_system;
 
 import java.util.LinkedList;
 
-public class EmployeeDB_Mem implements IEmployeeDB{
+public class EmployeeDB_Mem implements IEmployeeDB {
 
     private final LinkedList<Employee> db;
 
