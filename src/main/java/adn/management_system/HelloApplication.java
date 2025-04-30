@@ -2,6 +2,9 @@ package adn.management_system;
 
 import javafx.application.Application;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,10 +29,16 @@ public class HelloApplication extends Application implements IMVPContract.View {
     private TextField tf_jobField;
     private TextField tf_yearsField;
     private Label label_numOfEmployee;
+
     private TextField tf_findIDField;
-    private Label label_found;
+
     private TextField tf_removalIDField;
     private Label label_remove;
+
+    private ObservableList<Employee> employeeObservableList;
+    private ObservableList<Employee> empty = FXCollections.observableArrayList();
+
+    TableView<Employee> tableView;
 
     IMVPContract.Presenter myPresenter;
 
@@ -39,17 +48,30 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
         stage.setTitle("Employee Database");
 
-        TableView<Employee> tableView = new TableView<>();
-        ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList(
-        );
+        tableView = new TableView<>();
+
+        employeeObservableList = FXCollections.observableArrayList();
+
         tableView.setItems(employeeObservableList);
 
         TableColumn<Employee, String> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmployeeID()));
+
         TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
+        firstNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
+
         TableColumn<Employee, String> lastNameColumn = new TableColumn<>("Last Name");
+        lastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
+
         TableColumn<Employee, Integer> salaryColumn = new TableColumn<>("Salary");
+        salaryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getSalary()).asObject());
+
         TableColumn<Employee, String> jobColumn = new TableColumn<>("Job Title");
+        jobColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getJobTitle()));
+
         TableColumn<Employee, Integer> yearsColumn = new TableColumn<>("Years Employed");
+        yearsColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getYearsAtCompany()).asObject());
+
         tableView.getColumns().addAll(idColumn, firstNameColumn, lastNameColumn, salaryColumn, jobColumn, yearsColumn);
 
         StackPane tablePane = new StackPane();
@@ -82,9 +104,6 @@ public class HelloApplication extends Application implements IMVPContract.View {
         Button findButton = new Button("Find Employee");
         findButton.setOnAction(this::buttonFind);
 
-        Label label_findResult = new Label("Employee Details: ");
-        label_found = new Label("");
-
         Label removeLabel = new Label("Remove an Employee: ");
         tf_removalIDField = new TextField();
         tf_removalIDField.setPromptText("Enter the Employee's ID");
@@ -101,8 +120,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
         VBox findEmployeePane = new VBox(10);
         findEmployeePane.setPadding(new Insets(20, 30, 20, 30));
-        findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, label_findResult, label_found,
-                removeLabel, tf_removalIDField, removeButton, label_remove);
+        findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, removeLabel, tf_removalIDField,
+                removeButton, label_remove);
 
         HBox hBoxPane = new HBox();
         hBoxPane.getChildren().addAll(addEmployeePane, findEmployeePane, tablePane);
@@ -127,17 +146,20 @@ public class HelloApplication extends Application implements IMVPContract.View {
     }
 
     @Override
-    public void updateNumberInDB(int num) {
+    public void updateNumberInDB(int num, Employee e) {
         label_numOfEmployee.setText( Integer.toString(num) );
+        employeeObservableList.add(e);
+        tableView.setItems(employeeObservableList);
     }
 
     @Override
     public void updateFound(Employee e) {
+        ObservableList<Employee> foundEmployee = FXCollections.observableArrayList();
         if (e != null) {
-            label_found.setText("ID: " + e.getEmployeeID() + ", First Name: " + e.getFirstName() + ", Last Name: " + e.getLastName()
-                    + ", Salary: " + e.getSalary() + ", Job Title: " + e.getJobTitle() + ", Years in Company: " + e.getYearsAtCompany());
+            foundEmployee.add(e);
+            tableView.setItems(foundEmployee);
         } else {
-            label_found.setText("Employee Not Found");
+            tableView.setItems(foundEmployee);
         }
     }
 

@@ -17,7 +17,7 @@ public class EmployeePresenter implements IMVPContract.Presenter {
         Employee e = new Employee(initFirstName, initLastName, eSalary, initJobTitle, eYears, initEmployeeID);
         employeeDB.addEmployee(e);
 
-        theActualView.updateNumberInDB( employeeDB.numInDB() );
+        theActualView.updateNumberInDB( employeeDB.numInDB(), e);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class EmployeePresenter implements IMVPContract.Presenter {
         employeeDB.removeEmployeeFromDB(e);
 
         theActualView.updateRemove();
-        theActualView.updateNumberInDB( employeeDB.numInDB() );
+        theActualView.updateNumberInDB( employeeDB.numInDB(), e);
     }
 }
