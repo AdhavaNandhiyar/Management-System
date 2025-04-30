@@ -12,11 +12,21 @@ public class EmployeeDB_Mem implements IEmployeeDB{
 
     @Override
     public void addEmployee(Employee e) {
-
+        this.db.add(e);
     }
 
     @Override
     public int numInDB() {
-        return 0;
+        return this.db.size();
+    }
+
+    @Override
+    public Employee findEmployee(String employeeID) {
+        for (Employee e: this.db) {
+            if (e.getEmployeeID().equals(employeeID)) {
+                return e;
+            }
+        }
+        return null;
     }
 }
