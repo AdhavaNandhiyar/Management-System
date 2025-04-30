@@ -55,14 +55,14 @@ public class HelloApplication extends Application implements IMVPContract.View {
         Button addEmployeeButton = new Button("Add employee to DB");
         addEmployeeButton.setOnAction(this::buttonClicked);
 
-        Label findLabel = new Label("Find an Employee: ");
+        Label findLabel = new Label("Find an Employee's Details: ");
         tf_findIDField = new TextField();
-        tf_findIDField.setPromptText("Enter the Employee IF");
+        tf_findIDField.setPromptText("Enter the Employee's ID");
 
         Button findButton = new Button("Find person");
         findButton.setOnAction(this::buttonFind);
 
-        Label label_findResult = new Label("Result: ");
+        Label label_findResult = new Label("Employee Details: ");
         label_found = new Label("");
 
         VBox vboxPane = new VBox(10);
@@ -87,13 +87,18 @@ public class HelloApplication extends Application implements IMVPContract.View {
     }
 
     public void buttonFind(ActionEvent event) {
-        myPresenter.addEmployeeToDB( tf_firstNameField.getText(), tf_lastNameField.getText(), tf_salaryField.getText(),
-                tf_jobField.getText(), tf_yearsField.getText(), tf_employeeIDField.getText());
+        myPresenter.findEmployee(tf_findIDField.getText());
     }
 
     @Override
     public void updateNumberInDB(int num) {
+        label_numOfEmployee.setText( Integer.toString(num) );
+    }
 
+    @Override
+    public void updateFound(Employee e) {
+        label_found.setText("ID: " + e.getEmployeeID() + ", First Name: " + e.getFirstName() + ", Last Name: " + e.getLastName()
+                + ", Salary: " + e.getSalary() + ", Job Title: " + e.getJobTitle() + ", Years in Company: " + e.getYearsAtCompany());
     }
 
     public static void main(String[] args) {
