@@ -28,6 +28,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
     private Label label_numOfEmployee;
     private TextField tf_findIDField;
     private Label label_found;
+    private TextField tf_removalIDField;
+    private Label label_remove;
 
     IMVPContract.Presenter myPresenter;
 
@@ -38,7 +40,9 @@ public class HelloApplication extends Application implements IMVPContract.View {
         stage.setTitle("Employee Database");
 
         TableView<Employee> tableView = new TableView<>();
-        ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
+        ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList(
+        );
+        tableView.setItems(employeeObservableList);
 
         TableColumn<Employee, String> idColumn = new TableColumn<>("ID");
         TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
@@ -68,18 +72,27 @@ public class HelloApplication extends Application implements IMVPContract.View {
         Label label_employeeInDB = new Label("Num of Employee's: ");
         label_numOfEmployee = new Label("0");
 
-        Button addEmployeeButton = new Button("Add employee to DB");
+        Button addEmployeeButton = new Button("Add Employee");
         addEmployeeButton.setOnAction(this::buttonClicked);
 
         Label findLabel = new Label("Find an Employee's Details: ");
         tf_findIDField = new TextField();
         tf_findIDField.setPromptText("Enter the Employee's ID");
 
-        Button findButton = new Button("Find person");
+        Button findButton = new Button("Find Employee");
         findButton.setOnAction(this::buttonFind);
 
         Label label_findResult = new Label("Employee Details: ");
         label_found = new Label("");
+
+        Label removeLabel = new Label("Remove an Employee: ");
+        tf_removalIDField = new TextField();
+        tf_removalIDField.setPromptText("Enter the Employee's ID");
+
+        Button removeButton = new Button("Remove Employee");
+        removeButton.setOnAction(this::buttonRemove);
+
+        label_remove = new Label("");
 
         VBox addEmployeePane = new VBox(10);
         addEmployeePane.setPadding(new Insets(20, 30, 20, 30));
@@ -88,7 +101,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
         VBox findEmployeePane = new VBox(10);
         findEmployeePane.setPadding(new Insets(20, 30, 20, 30));
-        findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, label_findResult, label_found);
+        findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, label_findResult, label_found,
+                removeLabel, tf_removalIDField, removeButton, label_remove);
 
         HBox hBoxPane = new HBox();
         hBoxPane.getChildren().addAll(addEmployeePane, findEmployeePane, tablePane);
@@ -108,6 +122,10 @@ public class HelloApplication extends Application implements IMVPContract.View {
         myPresenter.findEmployee(tf_findIDField.getText());
     }
 
+    public void buttonRemove(ActionEvent event) {
+        myPresenter.removeEmployee(tf_removalIDField.getText());
+    }
+
     @Override
     public void updateNumberInDB(int num) {
         label_numOfEmployee.setText( Integer.toString(num) );
@@ -115,8 +133,17 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
     @Override
     public void updateFound(Employee e) {
-        label_found.setText("ID: " + e.getEmployeeID() + ", First Name: " + e.getFirstName() + ", Last Name: " + e.getLastName()
-                + ", Salary: " + e.getSalary() + ", Job Title: " + e.getJobTitle() + ", Years in Company: " + e.getYearsAtCompany());
+        if (e != null) {
+            label_found.setText("ID: " + e.getEmployeeID() + ", First Name: " + e.getFirstName() + ", Last Name: " + e.getLastName()
+                    + ", Salary: " + e.getSalary() + ", Job Title: " + e.getJobTitle() + ", Years in Company: " + e.getYearsAtCompany());
+        } else {
+            label_found.setText("Employee Not Found");
+        }
+    }
+
+    @Override
+    public void updateRemove() {
+        label_remove.setText("Employee Removed");
     }
 
     public static void main(String[] args) {

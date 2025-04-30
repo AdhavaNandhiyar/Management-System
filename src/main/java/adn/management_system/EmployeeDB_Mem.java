@@ -29,4 +29,9 @@ public class EmployeeDB_Mem implements IEmployeeDB {
         }
         return null;
     }
+
+    @Override
+    public void removeEmployeeFromDB(Employee e) {
+        db.remove(e);
+    }
 }
