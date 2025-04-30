@@ -135,16 +135,23 @@ public class HelloApplication extends Application implements IMVPContract.View {
     public void buttonClicked(ActionEvent event) {
         myPresenter.addEmployeeToDB( tf_firstNameField.getText(), tf_lastNameField.getText(), tf_salaryField.getText(),
                 tf_jobField.getText(), tf_yearsField.getText(), tf_employeeIDField.getText());
-        tf_findIDField.clear();
+
+        tf_employeeIDField.clear();
         tf_jobField.clear();
+        tf_firstNameField.clear();
+        tf_lastNameField.clear();
+        tf_salaryField.clear();
+        tf_yearsField.clear();
     }
 
     public void buttonFind(ActionEvent event) {
         myPresenter.findEmployee(tf_findIDField.getText());
+        tf_findIDField.clear();
     }
 
     public void buttonRemove(ActionEvent event) {
         myPresenter.removeEmployee(tf_removalIDField.getText());
+        tf_removalIDField.clear();
     }
 
     public void buttonList(ActionEvent event) {
