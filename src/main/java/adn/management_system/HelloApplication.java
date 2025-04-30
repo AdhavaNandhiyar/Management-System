@@ -41,23 +41,13 @@ public class HelloApplication extends Application implements IMVPContract.View {
         ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
 
         TableColumn<Employee, String> idColumn = new TableColumn<>("ID");
-
-        // Create Age column
-        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("Age");
-
-        // Create City column
-        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("City");
-
-        TableColumn<Employee, Integer> salaryColumn = new TableColumn<>("City");
-
+        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
+        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("Last Name");
+        TableColumn<Employee, Integer> salaryColumn = new TableColumn<>("Salary");
         TableColumn<Employee, String> jobColumn = new TableColumn<>("Job Title");
-
-        TableColumn<Employee, Integer> yearsColumn = new TableColumn<>("Years in Company");
-
-        // Add columns to the table
+        TableColumn<Employee, Integer> yearsColumn = new TableColumn<>("Years Employed");
         tableView.getColumns().addAll(idColumn, firstNameColumn, lastNameColumn, salaryColumn, jobColumn, yearsColumn);
 
-        // Create a layout and add the TableView
         StackPane tablePane = new StackPane();
         tablePane.getChildren().add(tableView);
 
@@ -75,7 +65,6 @@ public class HelloApplication extends Application implements IMVPContract.View {
         tf_yearsField = new TextField();
         tf_yearsField.setPromptText("Enter how many years the employee has been employed");
 
-
         Label label_employeeInDB = new Label("Num of Employee's: ");
         label_numOfEmployee = new Label("0");
 
@@ -92,22 +81,21 @@ public class HelloApplication extends Application implements IMVPContract.View {
         Label label_findResult = new Label("Employee Details: ");
         label_found = new Label("");
 
-        VBox vboxPane = new VBox(10);
-        vboxPane.setPadding(new Insets(20, 30, 20, 30));
-        vboxPane.getChildren().addAll(messageLabel, tf_employeeIDField, tf_firstNameField, tf_lastNameField, tf_salaryField,
-                tf_jobField, tf_yearsField, addEmployeeButton, label_employeeInDB, label_numOfEmployee,
-                findLabel, tf_findIDField, findButton, label_findResult, label_found);
+        VBox addEmployeePane = new VBox(10);
+        addEmployeePane.setPadding(new Insets(20, 30, 20, 30));
+        addEmployeePane.getChildren().addAll(messageLabel, tf_employeeIDField, tf_firstNameField, tf_lastNameField, tf_salaryField,
+                tf_jobField, tf_yearsField, addEmployeeButton, label_employeeInDB, label_numOfEmployee);
+
+        VBox findEmployeePane = new VBox(10);
+        findEmployeePane.setPadding(new Insets(20, 30, 20, 30));
+        findEmployeePane.getChildren().addAll(findLabel, tf_findIDField, findButton, label_findResult, label_found);
 
         HBox hBoxPane = new HBox();
-        hBoxPane.getChildren().addAll(vboxPane, tablePane);
+        hBoxPane.getChildren().addAll(addEmployeePane, findEmployeePane, tablePane);
 
-        // The Scene (or SceneGraph) in JavaFX contains everything that will
-        // be rendered and shown.  Add the pane to it via the constructor call.
-        // and then let the stage know about the scene.
         Scene scene = new Scene(hBoxPane);
         stage.setScene(scene);
 
-        // this results in the stage being rendered
         stage.show();
     }
 
