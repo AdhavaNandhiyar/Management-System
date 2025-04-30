@@ -28,12 +28,10 @@ public class HelloApplication extends Application implements IMVPContract.View {
     private TextField tf_salaryField;
     private TextField tf_jobField;
     private TextField tf_yearsField;
-    private Label label_numOfEmployee;
 
     private TextField tf_findIDField;
 
     private TextField tf_removalIDField;
-    private Label label_remove;
 
     private ObservableList<Employee> employeeObservableList;
     private ObservableList<Employee> empty = FXCollections.observableArrayList();
@@ -91,9 +89,6 @@ public class HelloApplication extends Application implements IMVPContract.View {
         tf_yearsField = new TextField();
         tf_yearsField.setPromptText("Enter Years Employed");
 
-        Label label_employeeInDB = new Label("Num of Employee's: ");
-        label_numOfEmployee = new Label("0");
-
         Button addEmployeeButton = new Button("Add Employee");
         addEmployeeButton.setOnAction(this::buttonClicked);
 
@@ -111,7 +106,7 @@ public class HelloApplication extends Application implements IMVPContract.View {
         Button removeButton = new Button("Remove Employee");
         removeButton.setOnAction(this::buttonRemove);
 
-        label_remove = new Label("");
+        Label label_remove = new Label("");
 
         Label listLabel = new Label("Show full Employee List: ");
 
@@ -121,7 +116,7 @@ public class HelloApplication extends Application implements IMVPContract.View {
         VBox addEmployeePane = new VBox(10);
         addEmployeePane.setPadding(new Insets(20, 30, 20, 30));
         addEmployeePane.getChildren().addAll(messageLabel, tf_employeeIDField, tf_firstNameField, tf_lastNameField, tf_salaryField,
-                tf_jobField, tf_yearsField, addEmployeeButton, label_employeeInDB, label_numOfEmployee);
+                tf_jobField, tf_yearsField, addEmployeeButton);
 
         VBox findEmployeePane = new VBox(10);
         findEmployeePane.setPadding(new Insets(20, 30, 20, 30));
@@ -140,6 +135,8 @@ public class HelloApplication extends Application implements IMVPContract.View {
     public void buttonClicked(ActionEvent event) {
         myPresenter.addEmployeeToDB( tf_firstNameField.getText(), tf_lastNameField.getText(), tf_salaryField.getText(),
                 tf_jobField.getText(), tf_yearsField.getText(), tf_employeeIDField.getText());
+        tf_findIDField.clear();
+        tf_jobField.clear();
     }
 
     public void buttonFind(ActionEvent event) {
@@ -156,7 +153,6 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
     @Override
     public void updateNumberInDB(int num, Employee e) {
-        label_numOfEmployee.setText( Integer.toString(num) );
         employeeObservableList.add(e);
         tableView.setItems(employeeObservableList);
     }
@@ -174,7 +170,11 @@ public class HelloApplication extends Application implements IMVPContract.View {
 
     @Override
     public void updateRemove(Employee e) {
-        label_remove.setText("Employee Removed");
+        for (Employee employee: employeeObservableList) {
+            if (employee.getEmployeeID().equals(e.getEmployeeID())) {
+                employeeObservableList.remove(employee);
+            }
+        }
     }
 
     public static void main(String[] args) {
