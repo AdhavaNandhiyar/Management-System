@@ -1,1 +1,2 @@
 # Management System program
+This project is about a management system similar to what most databases use, using java and javafx to display and run the program with mvp. This project is a continuation from my final project for my Java class in college. This project uses an employee database to keep the employees in memory and then uses a table to display from the memory and utilizea a presenter and view. Future goals for this project is to increase my proficency for both front and back end and also increase my abillity for UI development.
