@@ -20,25 +20,75 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+/**
+ * The HelloApplication class is used as front end
+ * to display the back end contents into a table
+ * and also to get inputs
+ *
+ * @author Adhava Nandhiyar
+ */
 public class HelloApplication extends Application implements IMVPContract.View {
 
+    /**
+     * the employee ID textfield
+     */
     private TextField tf_employeeIDField;
+
+    /**
+     * the employee first name textfield
+     */
     private TextField tf_firstNameField;
+
+    /**
+     * the employee last name textfield
+     */
     private TextField tf_lastNameField;
+
+    /**
+     * the employee salary textfield
+     */
     private TextField tf_salaryField;
+
+    /**
+     * the employee job textfield
+     */
     private TextField tf_jobField;
+
+    /**
+     * the employee employed years textfield
+     */
     private TextField tf_yearsField;
 
+    /**
+     * the employee ID textfield to be used in the find function
+     */
     private TextField tf_findIDField;
 
+    /**
+     * the employee ID textfield to be used in the remove function
+     */
     private TextField tf_removalIDField;
 
+    /**
+     * the list of all the employees for the table
+     */
     private ObservableList<Employee> employeeObservableList;
 
+    /**
+     * the table of employees
+     */
     TableView<Employee> tableView;
 
+    /**
+     * the presenter connector
+     */
     IMVPContract.Presenter myPresenter;
 
+    /**
+     * The showing and start to show the javafx
+     * front end
+     */
     @Override
     public void start(Stage stage) throws IOException {
         myPresenter = new EmployeePresenter(this);
@@ -131,6 +181,11 @@ public class HelloApplication extends Application implements IMVPContract.View {
         stage.show();
     }
 
+    /**
+     * the function to add an employee after the button is clicked
+     *
+     * @param event a ActionEvent that tells the button has been pressed
+     */
     public void buttonClicked(ActionEvent event) {
         myPresenter.addEmployeeToDB( tf_firstNameField.getText(), tf_lastNameField.getText(), tf_salaryField.getText(),
                 tf_jobField.getText(), tf_yearsField.getText(), tf_employeeIDField.getText());
@@ -143,26 +198,52 @@ public class HelloApplication extends Application implements IMVPContract.View {
         tf_yearsField.clear();
     }
 
+    /**
+     * the function to find an employee after the button is clicked
+     *
+     * @param event a ActionEvent that tells the button has been pressed
+     */
     public void buttonFind(ActionEvent event) {
         myPresenter.findEmployee(tf_findIDField.getText());
         tf_findIDField.clear();
     }
 
+    /**
+     * the function to remove an employee after the button is clicked
+     *
+     * @param event a ActionEvent that tells the button has been pressed
+     */
     public void buttonRemove(ActionEvent event) {
         myPresenter.removeEmployee(tf_removalIDField.getText());
         tf_removalIDField.clear();
     }
 
+    /**
+     * the function to get the full table after the button is pressed
+     *
+     * @param event a ActionEvent that tells the button has been pressed
+     */
     public void buttonList(ActionEvent event) {
        tableView.setItems(employeeObservableList);
     }
 
+    /**
+     * Updates the number and table for the view
+     *
+     * @param num a int containing the number of employees in the DB
+     * @param e the employee to add to the table
+     */
     @Override
     public void updateNumberInDB(int num, Employee e) {
         employeeObservableList.add(e);
         tableView.setItems(employeeObservableList);
     }
 
+    /**
+     * Updates the table with only displaying the found table
+     *
+     * @param e a employee that is the found employee
+     */
     @Override
     public void updateFound(Employee e) {
         ObservableList<Employee> foundEmployee = FXCollections.observableArrayList();
@@ -174,6 +255,11 @@ public class HelloApplication extends Application implements IMVPContract.View {
         }
     }
 
+    /**
+     * Removes the employee from the list and table
+     *
+     * @param e a employee that is the removed employee
+     */
     @Override
     public void updateRemove(Employee e) {
         for (Employee employee: employeeObservableList) {
@@ -183,6 +269,9 @@ public class HelloApplication extends Application implements IMVPContract.View {
         }
     }
 
+    /**
+     * Launches the front end
+     */
     public static void main(String[] args) {
         launch();
     }
