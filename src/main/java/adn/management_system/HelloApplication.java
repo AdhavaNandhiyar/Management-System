@@ -34,7 +34,6 @@ public class HelloApplication extends Application implements IMVPContract.View {
     private TextField tf_removalIDField;
 
     private ObservableList<Employee> employeeObservableList;
-    private ObservableList<Employee> empty = FXCollections.observableArrayList();
 
     TableView<Employee> tableView;
 
